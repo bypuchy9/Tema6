@@ -62,7 +62,6 @@ public class Partido {
         switch (accion) {
             case PASE -> hacerPase(jugador, rival);
             case REGATE -> hacerRegate(jugador, rival);
-            case TIRO -> hacerTiro(jugador, defensor);
         }
     }
     /**
@@ -103,22 +102,6 @@ public class Partido {
             cambiarPosesion();
             narrador.narrar(rival + " recupera el balón");
         }
-    }
-    /**
-     * Ejecuta tiro a puerta penalizando la distancia y enfrentando al portero.
-     */
-    private void hacerTiro(Jugador atacante, Equipo defensor) {
-        double factor = 1 - ((10 - pelota.getIndiceJugador()) * 0.10);
-        int tiro = (int) (modificar(atacante.getTiro()) * factor);
-        int parada = modificar(defensor.getJugadores()[0].getPortero());
-
-        if (tiro > parada) {
-            pelota.getEquipoActual().marcarGol();
-            narrador.narrar("GOOOOOOL de " + atacante.getNombre());
-        } else {
-            narrador.narrar("PARADÓN DEL PORTERO contra " + atacante.getNombre());
-        }
-        reiniciarCentro();
     }
     /**
      * Cambia el turno de ataque y resetea el balón al centro del campo.
